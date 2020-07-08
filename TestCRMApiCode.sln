@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCRMApiCode", "TestCRMApiCode.csproj", "{92064323-1DEE-4600-A916-8319060AFAFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92064323-1DEE-4600-A916-8319060AFAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92064323-1DEE-4600-A916-8319060AFAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92064323-1DEE-4600-A916-8319060AFAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92064323-1DEE-4600-A916-8319060AFAFE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2B4CDE4-6611-4278-AA2B-24168839A56F}
+	EndGlobalSection
+EndGlobal
