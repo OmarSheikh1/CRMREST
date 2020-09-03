@@ -49,9 +49,12 @@ C:\Users\vmuser\source\repos\TestCRMApiCode\bin\roslyn\VBCSCompiler.exe
 C:\Users\vmuser\source\repos\TestCRMApiCode\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\vmuser\source\repos\TestCRMApiCode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\vmuser\source\repos\TestCRMApiCode\bin\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+C:\Users\vmuser\source\repos\TestCRMApiCode\bin\Newtonsoft.Json.dll
 C:\Users\vmuser\source\repos\TestCRMApiCode\bin\Microsoft.IdentityModel.Clients.ActiveDirectory.pdb
 C:\Users\vmuser\source\repos\TestCRMApiCode\bin\Microsoft.IdentityModel.Clients.ActiveDirectory.xml
+C:\Users\vmuser\source\repos\TestCRMApiCode\bin\Newtonsoft.Json.xml
 C:\Users\vmuser\source\repos\TestCRMApiCode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.csproj.CopyComplete
 C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.dll
 C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.pdb
+C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.csprojAssemblyReference.cache

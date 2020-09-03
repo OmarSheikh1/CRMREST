@@ -1,8 +1,10 @@
 ﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,12 +20,12 @@ namespace TestCRMApiCode
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            var accounts = CrmRequest(
+            var _response = CrmRequest(
                HttpMethod.Get,
                "https://mldev05.crm8.dynamics.com/api/data/v9.1/accounts?$select=accountid,accountnumber")
                .Result.Content.ReadAsStringAsync();
 
-            if (accounts is null)
+            if (_response is null)
             {
             }
         }
@@ -69,21 +71,81 @@ namespace TestCRMApiCode
 
             var accessToken = result.AccessToken;
 
+            ////var client = new HttpClient();
+            ////var msg = new HttpRequestMessage(httpMethod, requestUri);
+            ////msg.Headers.Add("OData-MaxVersion", "4.0");
+            ////msg.Headers.Add("OData-Version", "4.0");
+            ////msg.Headers.Add("Prefer", "odata.include-annotations=\"*\"");
+            ////msg.Headers.Add("Accept", "application/json");
+            //////msg.Headers.Add("Content-Type", "application/json; charset=utf-8");
+
+            ////// Passing AccessToken in Authentication header  
+            ////msg.Headers.Add("Authorization", $"Bearer {accessToken}");
+
+            //////if (body != null)
+            //////    msg.Content = new StringContent(body, UnicodeEncoding.UTF8, "application/json");
+
+            ////return await client.SendAsync(msg);
+            ///
+
+            ///2.0 Leads
+
+            ////CRMLeadModel leadModel = new CRMLeadModel()
+            ////{
+            ////    firstname = "Omar",
+            ////    lastname = "Sheikh",
+            ////    middlename = "Hassan"
+            ////};
+            ////var leadUrl = $"https://mldev05.crm8.dynamics.com/api/data/v9.0/leads";
+
+            ////var json = JsonConvert.SerializeObject(leadModel);
+            ////HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            ////var client = new HttpClient();
+            ////client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            ////var resMsg =   await client.PostAsync(leadUrl, content);
+            ////return resMsg;
+
+            ///3.0 Accounts
+            var AccountsUrl = $"https://mldev05.crm8.dynamics.com/api/data/v9.0/accounts";
+
+            CRMAccountModel AccountModel = new CRMAccountModel()
+            {
+                name = "Sample Account Omar",
+                creditonhold = false,
+                address1_latitude = "47.639583",
+                description = "This is the description of the sample account",
+                revenue = 5000,
+                accountcategorycode = 1
+            };
+
+            var json = JsonConvert.SerializeObject(AccountModel);
+            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = new HttpClient();
-            var msg = new HttpRequestMessage(httpMethod, requestUri);
-            msg.Headers.Add("OData-MaxVersion", "4.0");
-            msg.Headers.Add("OData-Version", "4.0");
-            msg.Headers.Add("Prefer", "odata.include-annotations=\"*\"");
-            msg.Headers.Add("Accept", "application/json");
-            //msg.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var resMsg = await client.PostAsync(AccountsUrl, content);
+            return resMsg;
 
-            // Passing AccessToken in Authentication header  
-            msg.Headers.Add("Authorization", $"Bearer {accessToken}");
-
-            //if (body != null)
-            //    msg.Content = new StringContent(body, UnicodeEncoding.UTF8, "application/json");
-
-            return await client.SendAsync(msg);
         }
+    }
+
+    /// <summary>
+    /// Lead data model used to posted to CRM web api
+    /// </summary>
+    public class CRMLeadModel
+    {
+        public string firstname { get; set; }
+        public string middlename { get; set; }
+        public string lastname { get; set; }
+        public string telephone1 { get; set; }
+    }
+
+    public class CRMAccountModel
+    {
+        public string name { get; set; }
+        public bool creditonhold { get; set; }
+        public string address1_latitude { get; set; }
+        public string description { get; set; }
+        public int revenue { get; set; }
+        public int accountcategorycode { get; set; }
     }
 }
