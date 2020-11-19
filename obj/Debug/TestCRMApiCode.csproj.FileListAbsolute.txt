@@ -58,3 +58,4 @@ C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.csproj.Copy
 C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.dll
 C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.pdb
 C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.csprojAssemblyReference.cache
+C:\Users\vmuser\source\repos\TestCRMApiCode\obj\Debug\TestCRMApiCode.csproj.CoreCompileInputs.cache

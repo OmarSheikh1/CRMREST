@@ -15,14 +15,31 @@ namespace TestCRMApiCode
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        string clientId = "04f79a58-2b65-4390-ab51-6c97328abc5f";
-        string clientSecret = "rI1ir6g6fB7Qqxub.8F9h2t8.y.uU-mvj_";
+
+        string hardcodedUsername = "svc-dev-mldyn@MicrolandDynamics.onmicrosoft.com";
+        string hardcodedPassword = "Microland@123";
+
+        //string clientId = "04f79a58-2b65-4390-ab51-6c97328abc5f";
+        //string clientId = "77560240-4a65-4d7c-8c65-540c285fcaf1";
+        string clientId = "605a2058-8fda-4d4b-9353-7142ab85dd0a";
+
+        //string clientSecret = "rI1ir6g6fB7Qqxub.8F9h2t8.y.uU-mvj_";
+        //string clientSecret = "7S-L3VCA~BOInnd~Nc9Q_egu8W~Lo3D84r";
+        //string clientSecret = "IP-jO~68Yv-DOYTNpI5y_r6g9~7~l2hM43";
+        string clientSecret = "6M9.mdfp73nl.W4X-Y.ZpwHxfTj4ypqMu-";
+
+        //string authority = "https://login.microsoftonline.com/971d5af1-c43d-4b58-882f-fa3271fc7f0a";
+        //string authority = "https://login.microsoftonline.com/971d5af1-c43d-4b58-882f-fa3271fc7f0a";
+        string authority = "https://login.microsoftonline.com/971d5af1-c43d-4b58-882f-fa3271fc7f0a";
+
+        string resourceUrl = "https://mldev05.crm11.dynamics.com/"; // Org URL  
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
             var _response = CrmRequest(
-               HttpMethod.Get,
-               "https://mldev05.crm8.dynamics.com/api/data/v9.1/accounts?$select=accountid,accountnumber")
+               HttpMethod.Get, resourceUrl + "api/data/v9.1/accounts?$select=accountid,accountnumber")
                .Result.Content.ReadAsStringAsync();
 
             if (_response is null)
@@ -58,35 +75,60 @@ namespace TestCRMApiCode
         //}
         public async Task<HttpResponseMessage> CrmRequest(HttpMethod httpMethod, string requestUri, string body = null)
         {
-            //var accessToken = await AccessTokenGenerator();
 
-            string authority = "https://login.microsoftonline.com/971d5af1-c43d-4b58-882f-fa3271fc7f0a";
-            string resourceUrl = "https://mldev05.crm8.dynamics.com/"; // Org URL  
+            string accessToken;
 
 
+            //try
+            //{
+            //    System.Diagnostics.Debugger.Break();
+            //    UserPasswordCredential credential = new UserPasswordCredential(hardcodedUsername, hardcodedPassword);
+            //    AuthenticationContext authenticationContext = new AuthenticationContext(authority);
+            //    var authResult = await authenticationContext.AcquireTokenAsync(resourceUrl, clientId, credential);
 
-            ClientCredential credentials = new ClientCredential(clientId, clientSecret);
-            AuthenticationContext authenticationContext = new AuthenticationContext(authority);
-            AuthenticationResult result = await authenticationContext.AcquireTokenAsync(resourceUrl, credentials).ConfigureAwait(false);
 
-            var accessToken = result.AccessToken;
+            //    accessToken = authResult.AccessToken;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
 
-            ////var client = new HttpClient();
-            ////var msg = new HttpRequestMessage(httpMethod, requestUri);
-            ////msg.Headers.Add("OData-MaxVersion", "4.0");
-            ////msg.Headers.Add("OData-Version", "4.0");
-            ////msg.Headers.Add("Prefer", "odata.include-annotations=\"*\"");
-            ////msg.Headers.Add("Accept", "application/json");
-            //////msg.Headers.Add("Content-Type", "application/json; charset=utf-8");
 
-            ////// Passing AccessToken in Authentication header  
-            ////msg.Headers.Add("Authorization", $"Bearer {accessToken}");
 
-            //////if (body != null)
-            //////    msg.Content = new StringContent(body, UnicodeEncoding.UTF8, "application/json");
 
-            ////return await client.SendAsync(msg);
-            ///
+            try
+            {
+                ClientCredential credentials = new ClientCredential(clientId, clientSecret);
+                AuthenticationContext authenticationContext = new AuthenticationContext(authority);
+                AuthenticationResult result = await authenticationContext.AcquireTokenAsync(resourceUrl, credentials).ConfigureAwait(false);
+                accessToken = result.AccessToken;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+
+
+            var client = new HttpClient();
+            var msg = new HttpRequestMessage(httpMethod, requestUri);
+            msg.Headers.Add("OData-MaxVersion", "4.0");
+            msg.Headers.Add("OData-Version", "4.0");
+            msg.Headers.Add("Prefer", "odata.include-annotations=\"*\"");
+            msg.Headers.Add("Accept", "application/json");
+            //msg.Headers.Add("Content-Type", "application/json; charset=utf-8");
+
+            // Passing AccessToken in Authentication header  
+            msg.Headers.Add("Authorization", $"Bearer {accessToken}");
+
+            //if (body != null)
+            //    msg.Content = new StringContent(body, UnicodeEncoding.UTF8, "application/json");
+
+            return await client.SendAsync(msg);
+            
 
             ///2.0 Leads
 
@@ -120,7 +162,7 @@ namespace TestCRMApiCode
 
             var json = JsonConvert.SerializeObject(AccountModel);
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            var client = new HttpClient();
+            //var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var resMsg = await client.PostAsync(AccountsUrl, content);
             return resMsg;
